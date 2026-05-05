@@ -29,7 +29,7 @@
 		"node": ">=18"
 	},
 	"scripts": {
-		"build": "tsup",
+		"build": "tsup && tsc -p tsconfig.build.json",
 		"check": "npm run typecheck && npm run test && npm run build && npm run test:package && npm run pack:dry",
 		"pack:dry": "npm pack --dry-run --cache ./.npm-cache",
 		"test": "vitest run",

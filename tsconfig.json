@@ -11,8 +11,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "ignoreDeprecations": "6.0"
+    "isolatedModules": true
   },
   "include": ["src", "tests", "tsup.config.ts", "vitest.config.ts"]
 }

@@ -6,7 +6,7 @@ export default defineConfig({
     react: "src/react/useChatScroll.ts"
   },
   format: ["esm", "cjs"],
-  dts: true,
+  dts: false,
   sourcemap: true,
   clean: true,
   target: "es2020",

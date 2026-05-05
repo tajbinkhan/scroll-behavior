@@ -1,4 +1,4 @@
-# chat-scroll-behavior
+# scroll-behavior
 
 Framework-agnostic chat scroll behavior for loading older and newer messages.
 
@@ -13,7 +13,7 @@ This package does not render UI. Your app owns messages, markup, fetching, styli
 ## Install
 
 ```bash
-npm install chat-scroll-behavior
+npm install scroll-behavior
 ```
 
 ## Mental Model
@@ -30,7 +30,7 @@ Each edge triggers once while the user remains inside its threshold. The edge is
 import {
   createChatScrollController,
   mergeMessages
-} from "chat-scroll-behavior";
+} from "scroll-behavior";
 
 const container = document.querySelector("#messages");
 let messages = [];
@@ -69,8 +69,8 @@ controller.check();
 
 ```tsx
 import { useRef, useState } from "react";
-import { mergeMessages } from "chat-scroll-behavior";
-import { useChatScroll } from "chat-scroll-behavior/react";
+import { mergeMessages } from "scroll-behavior";
+import { useChatScroll } from "scroll-behavior/react";
 
 type Message = {
   id: string;
@@ -127,8 +127,8 @@ Use the hook only inside a client component.
 "use client";
 
 import { useRef, useState } from "react";
-import { mergeMessages } from "chat-scroll-behavior";
-import { useChatScroll } from "chat-scroll-behavior/react";
+import { mergeMessages } from "scroll-behavior";
+import { useChatScroll } from "scroll-behavior/react";
 
 export function ChatClient() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -251,7 +251,7 @@ The controller captures the anchor immediately before your merge runs. That keep
 For virtualized lists, use the low-level helpers:
 
 ```ts
-import { preserveScrollAnchor } from "chat-scroll-behavior";
+import { preserveScrollAnchor } from "scroll-behavior";
 
 await preserveScrollAnchor(container, async () => {
   prependRows();

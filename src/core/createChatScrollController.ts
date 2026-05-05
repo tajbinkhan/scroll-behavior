@@ -291,6 +291,6 @@ function assertContainer(container: HTMLElement | null | undefined): asserts con
     typeof container.addEventListener !== "function" ||
     typeof container.removeEventListener !== "function"
   ) {
-    throw new Error("chat-scroll-behavior requires a valid scroll container.");
+    throw new Error("scroll-behavior requires a valid scroll container.");
   }
 }

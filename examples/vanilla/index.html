@@ -3,31 +3,236 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>chat-scroll-behavior vanilla example</title>
+    <title>scroll-behavior vanilla example</title>
     <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f6f8;
+        --panel: #ffffff;
+        --panel-muted: #f7f9fb;
+        --line: #d9e0e7;
+        --text: #17212b;
+        --muted: #657282;
+        --incoming: #ffffff;
+        --outgoing: #e8f3ee;
+        --accent: #2563eb;
+        --accent-dark: #1d4ed8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
+        background: var(--bg);
+        color: var(--text);
         font-family: system-ui, sans-serif;
         margin: 0;
-        padding: 24px;
+        min-height: 100vh;
+      }
+
+      .chat-shell {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        height: 100vh;
+        margin: 0 auto;
+        max-width: 860px;
+        background: var(--panel);
+        border-inline: 1px solid var(--line);
+      }
+
+      .chat-header {
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        gap: 16px;
+        justify-content: space-between;
+        min-height: 72px;
+        padding: 16px 20px;
+      }
+
+      .chat-title {
+        display: grid;
+        gap: 3px;
+      }
+
+      .chat-title h1 {
+        font-size: 18px;
+        line-height: 1.2;
+        margin: 0;
+      }
+
+      .chat-title span,
+      .status {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .header-actions {
+        align-items: center;
+        display: flex;
+        gap: 10px;
+      }
+
+      button {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--text);
+        cursor: pointer;
+        font: inherit;
+        min-height: 36px;
+        padding: 0 12px;
+      }
+
+      button:hover {
+        background: var(--panel-muted);
       }
 
       #messages {
-        border: 1px solid #d0d7de;
-        height: 420px;
+        background:
+          linear-gradient(var(--panel-muted), var(--panel-muted)) padding-box,
+          var(--panel-muted);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-height: 0;
         overflow-y: auto;
-        padding: 12px;
+        padding: 18px 20px;
+        scroll-behavior: auto;
+      }
+
+      .load-marker {
+        align-self: center;
+        background: #eef2f7;
+        border: 1px solid #dce4ed;
+        border-radius: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        padding: 6px 10px;
       }
 
       .message {
-        border-bottom: 1px solid #eef1f4;
-        padding: 12px 4px;
+        align-items: flex-end;
+        display: flex;
+        gap: 8px;
+        max-width: 78%;
+      }
+
+      .message.incoming {
+        align-self: flex-start;
+      }
+
+      .message.outgoing {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      .bubble {
+        background: var(--incoming);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 1px 1px rgba(15, 23, 42, 0.04);
+        display: grid;
+        gap: 5px;
+        padding: 10px 12px;
+      }
+
+      .outgoing .bubble {
+        background: var(--outgoing);
+        border-color: #c7dfd4;
+      }
+
+      .message-name {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .message-text {
+        font-size: 14px;
+        line-height: 1.45;
+        margin: 0;
+      }
+
+      .message-time {
+        color: var(--muted);
+        font-size: 11px;
+        justify-self: end;
+      }
+
+      .composer {
+        align-items: center;
+        background: var(--panel);
+        border-top: 1px solid var(--line);
+        display: grid;
+        gap: 12px;
+        grid-template-columns: minmax(0, 1fr) auto;
+        padding: 14px 20px;
+      }
+
+      .composer input {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font: inherit;
+        min-height: 40px;
+        min-width: 0;
+        padding: 0 12px;
+      }
+
+      .composer button {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+        min-width: 84px;
+      }
+
+      .composer button:hover {
+        background: var(--accent-dark);
+      }
+
+      @media (max-width: 640px) {
+        .chat-shell {
+          border-inline: 0;
+        }
+
+        .chat-header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .header-actions {
+          justify-content: space-between;
+          width: 100%;
+        }
+
+        .message {
+          max-width: 90%;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>Vanilla chat scroll</h1>
+    <main class="chat-shell">
+      <header class="chat-header">
+        <div class="chat-title">
+          <h1>Operations room</h1>
+          <span>Vanilla JavaScript example</span>
+        </div>
+        <div class="header-actions">
+          <span class="status" id="status">Ready</span>
+          <button type="button" id="jump-bottom">Latest</button>
+        </div>
+      </header>
       <div id="messages"></div>
+      <form class="composer" id="composer">
+        <input
+          id="message-input"
+          autocomplete="off"
+          placeholder="Write a local demo message"
+          type="text"
+        />
+        <button type="submit">Send</button>
+      </form>
     </main>
     <script type="module" src="./main.js"></script>
   </body>

@@ -4,10 +4,10 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 
-const esm = await import("scroll-behavior");
-const esmReact = await import("scroll-behavior/react");
-const cjs = require("scroll-behavior");
-const cjsReact = require("scroll-behavior/react");
+const esm = await import("chat-scroll-behavior");
+const esmReact = await import("chat-scroll-behavior/react");
+const cjs = require("chat-scroll-behavior");
+const cjsReact = require("chat-scroll-behavior/react");
 
 assert.equal(typeof esm.createChatScrollController, "function");
 assert.equal(typeof esm.mergeMessages, "function");

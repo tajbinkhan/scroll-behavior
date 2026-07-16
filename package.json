@@ -1,5 +1,5 @@
 {
-	"name": "scroll-behavior",
+	"name": "chat-scroll-behavior",
 	"version": "0.1.0",
 	"description": "Framework-agnostic chat scroll behavior for loading older and newer messages.",
 	"type": "module",

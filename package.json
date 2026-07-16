@@ -1,7 +1,15 @@
 {
 	"name": "chat-scroll-behavior",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Framework-agnostic chat scroll behavior for loading older and newer messages.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tajbinkhan/chat-scroll-behavior.git"
+	},
+	"bugs": {
+		"url": "https://github.com/tajbinkhan/chat-scroll-behavior/issues"
+	},
+	"homepage": "https://github.com/tajbinkhan/chat-scroll-behavior#readme",
 	"type": "module",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
